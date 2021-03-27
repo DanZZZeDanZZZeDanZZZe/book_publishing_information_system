@@ -16,6 +16,20 @@ const addNewEntity = createAsyncThunk(
   }
 )
 
+const getAllEntities = createAsyncThunk(
+  'entity/get-all',
+  async (data, thunkAPI) => {
+    const { email, token } = thunkAPI.getState().authenticationReducer
+    const { entity } = thunkAPI.getState().entityReducer
+    const response = await APIService.getAllEntities({
+      email,
+      token,
+      entity,
+    })
+    return response
+  }
+)
+
 export const entitySlice = createSlice({
   name: 'entity',
   initialState: {
@@ -36,6 +50,11 @@ export const entitySlice = createSlice({
     clearView: (state) => {
       state.view = null
     },
+    clear: (state) => {
+      state.entity = null
+      state.view = null
+      state.data = []
+    },
   },
   extraReducers: {
     [addNewEntity.fulfilled]: (state, action) => {
@@ -45,13 +64,19 @@ export const entitySlice = createSlice({
       state.data.push({ ...data, id })
     },
     [addNewEntity.rejected]: (_, action) => alert(action.error.message),
+    [getAllEntities.fulfilled]: (state, action) => {
+      state.view = 'table'
+      const { data } = action.payload
+      state.data = state.data.concat(data)
+    },
+    [getAllEntities.rejected]: (_, action) => alert(action.error.message),
   },
 })
 
 const { actions, reducer } = entitySlice
 
-export const { setEntity, clearEntity, setView, clearView } = actions
+export const { setEntity, clearEntity, setView, clearView, clear } = actions
 
-export { addNewEntity }
+export { addNewEntity, getAllEntities }
 
 export default reducer

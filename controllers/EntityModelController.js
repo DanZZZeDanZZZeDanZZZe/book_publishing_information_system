@@ -14,11 +14,6 @@ class EntityModelController {
   determineOwner() {
     return composeMiddlewares([
       this.auth.checkAuth(),
-      createMiddleware((req, res, next) => {
-        req.email = req.body.email
-        next()
-      }),
-      this.auth.checkAuth(),
       this.user.findUser(),
       createMiddleware((req, res, next) => {
         if (req.foundData.user.id === req.decoded.userId) {
@@ -36,6 +31,10 @@ class EntityModelController {
 
   addNewEntity() {
     return composeMiddlewares([
+      createMiddleware((req, res, next) => {
+        req.email = req.body.email
+        next()
+      }),
       this.determineOwner(),
       createMiddleware(async (req, res, next) => {
         const newEntity = new this.Model({ ...req.body.data, owner: req.owner })
@@ -43,6 +42,22 @@ class EntityModelController {
         const message = 'Entity was created'
         console.log(message)
         res.status(201).json({ message, id: doc.id })
+      }),
+    ])
+  }
+
+  getAllEntities() {
+    return composeMiddlewares([
+      createMiddleware((req, res, next) => {
+        req.email = req.params.email
+        next()
+      }),
+      this.determineOwner(),
+      createMiddleware(async (req, res, next) => {
+        const entities = await this.Model.find({ owner: req.owner })
+        const message = 'Entities was send on client'
+        console.log(message)
+        res.status(201).json({ message, data: entities })
       }),
     ])
   }

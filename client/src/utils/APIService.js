@@ -23,6 +23,13 @@ class APIService extends HTTPMethodsHandler {
       `Bearer ${token}`
     )
   }
+
+  static async getAllEntities({ entity, email, token }) {
+    return await this.getWithAuthToken(
+      `entities/${entity}/${email}`,
+      `Bearer ${token}`
+    )
+  }
 }
 
 export default APIService
