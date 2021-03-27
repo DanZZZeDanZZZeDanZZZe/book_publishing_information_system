@@ -2,6 +2,8 @@ import { Switch, Route, Link, Redirect, BrowserRouter } from 'react-router-dom'
 
 import NavSideMenu from './components/NavSideMenu'
 import useAuth from './hooks/useAuth'
+import AuthorsPage from './pages/AuthorsPage'
+import BooksPage from './pages/BooksPage'
 import LoginPage from './pages/LoginPage'
 import RegistrationPage from './pages/RegistrationPage'
 
@@ -12,18 +14,21 @@ function AppRouter() {
     <BrowserRouter>
       {isAuth && (
         <NavSideMenu>
-          <Link to="/notes">Notes</Link>
-          <Link to="/groups">Groups</Link>
+          <Link to="/authors">Authors</Link>
+          <Link to="/books">Books</Link>
         </NavSideMenu>
       )}
       <Switch>
         {isAuth ? (
           <>
-            <Route path="/notes">
-              <h1>Notes</h1>
+            <Route path="/books" exact>
+              <BooksPage />
+            </Route>
+            <Route path="/authors" exact>
+              <AuthorsPage />
             </Route>
             <Route path="/">
-              <Redirect to="/notes" />
+              <Redirect to="/books" />
             </Route>
           </>
         ) : (
