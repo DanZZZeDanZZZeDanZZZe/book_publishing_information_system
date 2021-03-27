@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import {
   setEntity,
-  clearEntity,
   setView,
-  clearView,
+  clear,
+  getAllEntities,
 } from '../../redux/entitySlice'
 import AddNewEntityForm from '../forms/AddNewEntityForm'
 import Table from './Table'
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 90%;
-  margin-top: 5rem;
+  margin: 5rem 0;
 `
 
 export default function ContentForEntity({ entitySchema }) {
@@ -24,19 +24,23 @@ export default function ContentForEntity({ entitySchema }) {
 
   const dispatch = useDispatch()
   const view = useSelector((state) => state.entityReducer.view)
+  const data = useSelector((state) => state.entityReducer.data)
 
   useEffect(() => {
     dispatch(setEntity(title))
     dispatch(setView('table'))
     return () => {
-      dispatch(clearEntity())
-      dispatch(clearView())
+      dispatch(clear())
     }
   }, [dispatch, title])
 
+  useEffect(() => {
+    dispatch(getAllEntities())
+  }, [dispatch])
+
   return (
     <Wrapper>
-      {view === 'table' && <Table {...{ fields, title }} />}
+      {view === 'table' && <Table {...{ fields, title, data }} />}
       {view === 'form adding' && <AddNewEntityForm {...{ fields, title }} />}
     </Wrapper>
   )
