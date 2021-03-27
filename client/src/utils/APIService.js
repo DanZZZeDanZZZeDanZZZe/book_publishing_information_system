@@ -15,6 +15,14 @@ class APIService extends HTTPMethodsHandler {
   static async login(email, password) {
     return await this.post('login', { email, password })
   }
+
+  static async addNewEntity({ entity, email, data, token }) {
+    return await this.postWithAuthToken(
+      `entities/${entity}`,
+      { email, data },
+      `Bearer ${token}`
+    )
+  }
 }
 
 export default APIService
