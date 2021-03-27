@@ -44,7 +44,7 @@ const RegistrationForm = () => {
       <Form>
         <StyledLink to="login">I have account</StyledLink>
         <Legend>Registration</Legend>
-        <TextField label="Email" name="email" />
+        <TextField label="Email" name="email" type="email" />
         <TextField label="Password" name="password" type="password" />
         <SubmitButton text="Registration" />
       </Form>

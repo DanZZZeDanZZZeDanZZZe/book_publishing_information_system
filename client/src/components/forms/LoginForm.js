@@ -37,7 +37,7 @@ const LoginForm = () => {
       <Form>
         <StyledLink to="registration">I have no account</StyledLink>
         <Legend>Login</Legend>
-        <TextField label="Email" name="email" />
+        <TextField label="Email" name="email" type="email"/>
         <TextField label="Password" name="password" type="password" />
         <SubmitButton text="Login" />
       </Form>
