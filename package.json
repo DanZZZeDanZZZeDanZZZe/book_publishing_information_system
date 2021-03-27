@@ -43,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/DanZZZeDanZZZeDanZZZe/notes_and_calendars/issues"
   },
-  "homepage": "https://github.com/DanZZZeDanZZZeDanZZZe/notes_and_calendars#readme"
+  "homepage": "https://github.com/DanZZZeDanZZZeDanZZZe/notes_and_calendars#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  }
 }
