@@ -42,6 +42,24 @@ const TextInput = styled.input`
   box-shadow: ${shadows.MATERIAL_1};
 `
 
+const TextareaInput = styled.textarea`
+  background-color: white;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  box-sizing: border-box;
+  box-shadow: ${shadows.MATERIAL_1};
+`
+
+const SelectInput = styled.select`
+  background-color: white;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  box-sizing: border-box;
+  box-shadow: ${shadows.MATERIAL_1};
+`
+
 const Error = styled.span`
   text-align: right;
   color: ${colors.MAROON_X11};
@@ -79,4 +97,14 @@ const FieldWrapper = styled.div`
   grid-gap: 1rem;
 `
 
-export { Form, Legend, Label, TextInput, Error, Button, FieldWrapper }
+export {
+  Form,
+  Legend,
+  Label,
+  TextInput,
+  Error,
+  Button,
+  FieldWrapper,
+  TextareaInput,
+  SelectInput,
+}
