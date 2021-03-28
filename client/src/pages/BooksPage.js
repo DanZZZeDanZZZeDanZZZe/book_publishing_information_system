@@ -26,6 +26,16 @@ const bookSchema = {
       },
       options: [],
     },
+    {
+      title: 'project',
+      field: 'project',
+      container: 'select',
+      source: {
+        entity: 'project',
+        fields: ['id'],
+      },
+      options: [],
+    },
   ],
 }
 

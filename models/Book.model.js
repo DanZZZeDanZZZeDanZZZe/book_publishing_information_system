@@ -16,6 +16,11 @@ const BookSchema = new mongoose.Schema({
       ref: 'Author',
     },
   ],
+  project: {
+    autopopulate: true,
+    type: mongoose.ObjectId,
+    ref: 'Project',
+  },
   owner: {
     type: mongoose.ObjectId,
     required: true,
