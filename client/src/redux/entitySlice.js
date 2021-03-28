@@ -30,12 +30,37 @@ const getAllEntities = createAsyncThunk(
   }
 )
 
+const getAllSubentities = createAsyncThunk(
+  'entity/get-all-subentities',
+  async (data, thunkAPI) => {
+    const { email, token } = thunkAPI.getState().authenticationReducer
+    const { subentities } = thunkAPI.getState().entityReducer
+
+    const subentitiesKeys = Object.keys(subentities)
+
+    const response = await Promise.all(
+      subentitiesKeys.map(async (entity) => {
+        const response = await APIService.getAllEntities({
+          email,
+          token,
+          entity,
+        })
+
+        return [entity, response.data]
+      })
+    )
+
+    return Object.fromEntries(response)
+  }
+)
+
 export const entitySlice = createSlice({
   name: 'entity',
   initialState: {
     entity: null,
     view: null,
     data: [],
+    subentities: {},
   },
   reducers: {
     setEntity: (state, action) => {
@@ -50,10 +75,18 @@ export const entitySlice = createSlice({
     clearView: (state) => {
       state.view = null
     },
+    setData: (state, action) => {
+      for (const field in action.payload) {
+        if (field in state) {
+          state[field] = action.payload[field]
+        }
+      }
+    },
     clear: (state) => {
       state.entity = null
       state.view = null
       state.data = []
+      state.subentities = {}
     },
   },
   extraReducers: {
@@ -70,13 +103,24 @@ export const entitySlice = createSlice({
       state.data = state.data.concat(data)
     },
     [getAllEntities.rejected]: (_, action) => alert(action.error.message),
+    [getAllSubentities.fulfilled]: (state, action) => {
+      state.subentities = action.payload
+    },
+    [getAllSubentities.rejected]: (_, action) => alert(action.error.message),
   },
 })
 
 const { actions, reducer } = entitySlice
 
-export const { setEntity, clearEntity, setView, clearView, clear } = actions
+export const {
+  setEntity,
+  clearEntity,
+  setView,
+  clearView,
+  clear,
+  setData,
+} = actions
 
-export { addNewEntity, getAllEntities }
+export { addNewEntity, getAllEntities, getAllSubentities }
 
 export default reducer

@@ -9,11 +9,22 @@ const TextField = ({ label, type, container = 'input', options, ...props }) => {
   if (container === 'select' || container === 'multiselect') {
     Select = (props) => (
       <Styled.SelectInput {...field} {...props}>
-        {options.map((o, i) => (
-          <option key={`${i}-${o}`} value={o}>
-            {o}
-          </option>
-        ))}
+        {options.map((o, i) => {
+          if (o instanceof Array) {
+            const [value, text] = o
+            return (
+              <option key={`${i}-${o}`} value={value}>
+                {text}
+              </option>
+            )
+          } else {
+            return (
+              <option key={`${i}-${o}`} value={o}>
+                {o}
+              </option>
+            )
+          }
+        })}
       </Styled.SelectInput>
     )
   }

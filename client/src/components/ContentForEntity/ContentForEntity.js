@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import {
-  setEntity,
-  setView,
+  setData,
   clear,
   getAllEntities,
+  getAllSubentities,
 } from '../../redux/entitySlice'
 import AddNewEntityForm from '../forms/AddNewEntityForm'
 import Table from './Table'
@@ -19,6 +19,17 @@ const Wrapper = styled.div`
   margin: 5rem 0;
 `
 
+const extractSubentities = (fields) => {
+  let subentities = {}
+  fields.forEach((field) => {
+    const entity = field?.source?.entity
+    if (entity) {
+      Object.assign(subentities, { [entity]: null })
+    }
+  })
+  return subentities
+}
+
 export default function ContentForEntity({ entitySchema }) {
   const { title, fields } = entitySchema
 
@@ -27,15 +38,21 @@ export default function ContentForEntity({ entitySchema }) {
   const data = useSelector((state) => state.entityReducer.data)
 
   useEffect(() => {
-    dispatch(setEntity(title))
-    dispatch(setView('table'))
+    dispatch(
+      setData({
+        entity: title,
+        view: Table,
+        subentities: extractSubentities(fields),
+      })
+    )
     return () => {
       dispatch(clear())
     }
-  }, [dispatch, title])
+  }, [dispatch, title, fields])
 
   useEffect(() => {
     dispatch(getAllEntities())
+    dispatch(getAllSubentities())
   }, [dispatch])
 
   return (

@@ -1,7 +1,7 @@
 import FormKit from './FormKit'
 import { Legend } from './FormKit/styled-components'
 import { addNewEntity } from '../../redux/entitySlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const { FormMeta, Form, TextField, SubmitButton } = FormKit
 
@@ -21,6 +21,7 @@ const createInitalValues = (fields) => {
 const AddNewEntityForm = ({ title, fields }) => {
   const dispatch = useDispatch()
   const initialValues = createInitalValues(fields)
+  const subentities = useSelector((state) => state.entityReducer.subentities)
 
   return (
     <FormMeta
@@ -31,14 +32,26 @@ const AddNewEntityForm = ({ title, fields }) => {
     >
       <Form>
         <Legend>{`Add new ${title}`}</Legend>
-        {fields.map(({ type, container, field, title, options }, i) => {
+        {fields.map(({ type, container, field, title, options, source }, i) => {
+          let newOptions
+          if (source?.entity) {
+            newOptions = [...subentities[source.entity]].map((subentity) => {
+              const text = source.fields.reduce((acc, field) => {
+                return `${acc} ${subentity[field]}`
+              }, '')
+              return [subentity.id, text]
+            })
+          } else {
+            newOptions = options
+          }
+
           return (
             <TextField
               container={container}
               label={title}
               name={field}
               type={type}
-              options={options}
+              options={newOptions}
               key={i}
             />
           )
