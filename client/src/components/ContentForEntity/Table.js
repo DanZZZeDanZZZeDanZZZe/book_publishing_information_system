@@ -59,7 +59,7 @@ export default function Table({ name, fields, data }) {
           {data.map((entity, index) => (
             <tr key={index}>
               {fields.map((field, index) => (
-                <td key={index}>{entity[field.title]}</td>
+                <td key={index}>{entity[field.field]}</td>
               ))}
             </tr>
           ))}
