@@ -41,6 +41,12 @@ const StyledTable = styled.table`
   }
 `
 
+const formatDataFromDBToString = (data, fieldSchema) => {
+  return fieldSchema.source.fields.reduce((acc, field) => {
+    return `${acc} ${data[field]}`
+  }, '')
+}
+
 export default function Table({ name, fields, data }) {
   const dispatch = useDispatch()
 
@@ -58,9 +64,26 @@ export default function Table({ name, fields, data }) {
         <tbody>
           {data.map((entity, index) => (
             <tr key={index}>
-              {fields.map((field, index) => (
-                <td key={index}>{entity[field.field]}</td>
-              ))}
+              {fields.map((field, index) => {
+                let candidate = entity[field.field]
+
+                if (candidate instanceof Array) {
+                  candidate = candidate.reduce((acc, item) => {
+                    if (item instanceof Object) {
+                      const text = formatDataFromDBToString(item, field)
+                      return acc !== '' ? `${acc}, ${text}` : text
+                    } else {
+                      return `${acc}, ${item}`
+                    }
+                  }, '')
+                }
+
+                if (candidate instanceof Object) {
+                  candidate = formatDataFromDBToString(candidate, field)
+                }
+
+                return <td key={index}>{candidate}</td>
+              })}
             </tr>
           ))}
         </tbody>
