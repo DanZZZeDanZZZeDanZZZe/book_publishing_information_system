@@ -47,7 +47,7 @@ const formatDataFromDBToString = (data, fieldSchema) => {
   }, '')
 }
 
-export default function Table({ name, fields, data }) {
+export default function Table({ name, fields, data, title }) {
   const dispatch = useDispatch()
 
   return (
@@ -89,7 +89,7 @@ export default function Table({ name, fields, data }) {
         </tbody>
       </StyledTable>
       <ButtonsPanel>
-        <button onClick={() => dispatch(setView('form adding'))}>
+        <button onClick={() => dispatch(setView(`form adding ${title}`))}>
           Add new
         </button>
         <button>Edit</button>

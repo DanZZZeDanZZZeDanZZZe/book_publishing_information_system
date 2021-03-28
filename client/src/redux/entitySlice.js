@@ -91,14 +91,13 @@ export const entitySlice = createSlice({
   },
   extraReducers: {
     [addNewEntity.fulfilled]: (state, action) => {
-      state.view = 'table'
+      state.view = `table ${state.entity}`
       const data = action.meta.arg
       const { id } = action.payload
       state.data.push({ ...data, id })
     },
     [addNewEntity.rejected]: (_, action) => alert(action.error.message),
     [getAllEntities.fulfilled]: (state, action) => {
-      state.view = 'table'
       const { data } = action.payload
       state.data = state.data.concat(data)
     },

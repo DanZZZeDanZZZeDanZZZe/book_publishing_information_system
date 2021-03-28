@@ -41,7 +41,7 @@ export default function ContentForEntity({ entitySchema }) {
     dispatch(
       setData({
         entity: title,
-        view: Table,
+        view: `table ${title}`,
         subentities: extractSubentities(fields),
       })
     )
@@ -57,8 +57,10 @@ export default function ContentForEntity({ entitySchema }) {
 
   return (
     <Wrapper>
-      {view === 'table' && <Table {...{ fields, title, data }} />}
-      {view === 'form adding' && <AddNewEntityForm {...{ fields, title }} />}
+      {view === `table ${title}` && <Table {...{ fields, title, data }} />}
+      {view === `form adding ${title}` && (
+        <AddNewEntityForm {...{ fields, title }} />
+      )}
     </Wrapper>
   )
 }
