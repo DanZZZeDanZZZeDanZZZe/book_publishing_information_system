@@ -33,6 +33,9 @@ const AuthorSchema = new mongoose.Schema({
   },
 })
 
+AuthorSchema.set('toJSON', {
+  virtuals: true,
+})
 AuthorSchema.plugin(require('mongoose-autopopulate'))
 
 const Author = mongoose.model('Author', AuthorSchema)

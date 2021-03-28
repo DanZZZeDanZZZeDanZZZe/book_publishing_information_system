@@ -22,6 +22,10 @@ const BookSchema = new mongoose.Schema({
   },
 })
 
+BookSchema.set('toJSON', {
+  virtuals: true,
+})
+
 BookSchema.plugin(require('mongoose-autopopulate'))
 
 const Book = mongoose.model('Book', BookSchema)
