@@ -9,30 +9,22 @@ const bookSchema = {
       field: 'name',
       container: 'input',
       type: 'text',
-      // props: {
-      //   name: 'name',
-      //   type: 'text',
-      // },
     },
     {
       title: 'date',
       field: 'date',
       container: 'input',
       type: 'date',
-      // props: {
-      //   name: 'date',
-      //   type: 'date',
-      // },
     },
     {
       title: 'authors',
       field: 'authors',
       container: 'multiselect',
-      // props: {
-      //   ,
-      //   multiple: 'multiple',
-      // },
-      options: [1, 2, 3, 4],
+      source: {
+        entity: 'author',
+        fields: ['name', 'surname'],
+      },
+      options: [],
     },
   ],
 }

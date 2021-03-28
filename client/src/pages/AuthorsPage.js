@@ -33,12 +33,17 @@ const authorSchema = {
       field: 'gender',
       container: 'select',
       options: ['Male', 'Female', 'Other'],
+      initialValue: 'Male',
     },
     {
       title: 'books',
       field: 'books',
       container: 'multiselect',
-      options: [1, 2, 3, 4],
+      source: {
+        entity: 'book',
+        fields: ['name'],
+      },
+      options: [],
     },
   ],
 }
