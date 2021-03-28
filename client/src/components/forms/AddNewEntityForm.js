@@ -7,8 +7,12 @@ const { FormMeta, Form, TextField, SubmitButton } = FormKit
 
 const createInitalValues = (fields) => {
   const entries = fields.map((field) => {
-    const inital = field?.initalValue ?? ''
-    return [field.field, inital]
+    let initial = field?.initialValue
+    if (!initial) {
+      initial = field?.container === 'multiselect' ? [] : ''
+    }
+
+    return [field.field, initial]
   })
 
   return Object.fromEntries(entries)

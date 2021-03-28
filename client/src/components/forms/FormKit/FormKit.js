@@ -7,7 +7,7 @@ const TextField = ({ label, type, container = 'input', options, ...props }) => {
   let Select = null
 
   if (container === 'select' || container === 'multiselect') {
-    Select = () => (
+    Select = (props) => (
       <Styled.SelectInput {...field} {...props}>
         {options.map((o, i) => (
           <option key={`${i}-${o}`} value={o}>
