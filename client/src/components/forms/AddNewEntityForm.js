@@ -5,11 +5,22 @@ import { useDispatch } from 'react-redux'
 
 const { FormMeta, Form, TextField, SubmitButton } = FormKit
 
+const createInitalValues = (fields) => {
+  const entries = fields.map((field) => {
+    const inital = field?.initalValue ?? ''
+    return [field.field, inital]
+  })
+
+  return Object.fromEntries(entries)
+}
+
 const AddNewEntityForm = ({ title, fields }) => {
   const dispatch = useDispatch()
+  const initialValues = createInitalValues(fields)
 
   return (
     <FormMeta
+      initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
         dispatch(addNewEntity(values)).finally(() => setSubmitting(false))
       }}
