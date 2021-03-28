@@ -4,6 +4,7 @@ import NavSideMenu from './components/NavSideMenu'
 import useAuth from './hooks/useAuth'
 import AuthorsPage from './pages/AuthorsPage'
 import BooksPage from './pages/BooksPage'
+import CommandsPage from './pages/CommandPage'
 import LoginPage from './pages/LoginPage'
 import ProjectPage from './pages/ProjectPage'
 import RegistrationPage from './pages/RegistrationPage'
@@ -18,6 +19,7 @@ function AppRouter() {
           <Link to="/authors">Authors</Link>
           <Link to="/books">Books</Link>
           <Link to="/projects">Projects</Link>
+          <Link to="/commands">Commands</Link>
         </NavSideMenu>
       )}
       <Switch>
@@ -31,6 +33,9 @@ function AppRouter() {
             </Route>
             <Route path="/projects" exact>
               <ProjectPage />
+            </Route>
+            <Route path="/commands" exact>
+              <CommandsPage />
             </Route>
             <Route path="/">
               <Redirect to="/books" />

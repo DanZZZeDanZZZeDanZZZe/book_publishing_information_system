@@ -17,12 +17,22 @@ const projectSchema = {
       type: 'date',
     },
     {
-      title: 'books',
-      field: 'books',
+      title: 'book',
+      field: 'book',
       container: 'select',
       source: {
         entity: 'book',
         fields: ['name'],
+      },
+      options: [],
+    },
+    {
+      title: 'command',
+      field: 'command',
+      container: 'select',
+      source: {
+        entity: 'command',
+        fields: ['id'],
       },
       options: [],
     },

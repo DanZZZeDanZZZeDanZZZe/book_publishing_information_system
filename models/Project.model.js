@@ -14,6 +14,11 @@ const ProjectSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: 'Book',
   },
+  command: {
+    autopopulate: true,
+    type: mongoose.ObjectId,
+    ref: 'Command',
+  },
   owner: {
     type: mongoose.ObjectId,
     required: true,
